@@ -3,6 +3,7 @@ var http = require('http');
 var url = require('url');
 var request = require('request-json');
 var nonce = require('nonce')();
+const requestURL = require('request');
 
 var wsc;
 var isSocketOpen = false;
@@ -10,6 +11,8 @@ var sequence = 0;
 var webClient = '';
 var apiKey = 'UNCONFIGURED';
 var authenticationToken = 'UNCONFIGURED';
+var turnOnURL = 'UNCONFIGURED';
+var turnOffURL = 'UNCONFIGURED';
 var Accessory, Service, Characteristic, UUIDGen;
 
 module.exports = function(homebridge) {
@@ -40,6 +43,8 @@ function eWeLink(log, config, api) {
     this.config = config;
     this.accessories = new Map();
     this.authenticationToken = config['authenticationToken'];
+    this.turnOnURL = config['turnOnURL'];
+    this.turnOffURL = config['turnOffURL'];
 
     if (api) {
 
@@ -425,6 +430,28 @@ eWeLink.prototype.setPowerState = function(accessory, isOn, callback) {
     if (isOn) {
         targetState = 'on';
     }
+
+    ////////////////////////////////////////////
+    //          MY GAMES WITH URLS
+    var urlNotification = '';
+    if (isOn) {
+        urlNotification = platform.turnOnURL;
+    } else {
+        urlNotification = platform.turnOffURL;
+    }
+
+    requestURL({
+        url: urlNotification,
+        method: 'GET',
+    },
+    function (error, response, body) {
+        if (error) {
+            platform.log('STATUS: ' + response.statusCode);
+            platform.log(error.message);
+        }
+    });
+
+    ////////////////////////////////////////////
 
     platform.log("Setting power state to [%s] for device [%s]", targetState, accessory.displayName);
 
