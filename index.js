@@ -441,7 +441,7 @@ eWeLink.prototype.setPowerState = function(accessory, isOn, callback) {
         urlNotification = platform.turnOffURL;
     }
 
-    platform.requestURL({
+    requestURL({
         url: urlNotification,
         method: 'GET',
     },

@@ -52,7 +52,7 @@ sudo npm -g install homebridge-ewelink
         {
         "platform" : "eWeLink",
         "name" : "eWeLink",
-        "authenticationToken" : "obtain-with-Charles",,
+        "authenticationToken" : "obtain-with-Charles",
         "turnOnURL" : "https://...",
         "turnOffURL" : "https://...",
         "apiHost" : "us-api.coolkit.cc:8080",
