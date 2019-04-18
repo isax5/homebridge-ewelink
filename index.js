@@ -434,6 +434,7 @@ eWeLink.prototype.setPowerState = function(accessory, isOn, callback) {
     ////////////////////////////////////////////
     //          MY GAMES WITH URLS
     var urlNotification = '';
+
     if (isOn) {
         urlNotification = platform.turnOnURL;
     } else {
