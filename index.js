@@ -256,18 +256,6 @@ eWeLink.prototype.configureAccessory = function(accessory) {
                 } else {
                     urlNotification = platform.turnOnURL;
                 }
-        
-                requestURL({
-                    url: urlNotification,
-                    method: 'GET',
-                },
-                function (error, response, body) {
-                    if (error) {
-                        platform.log('STATUS: ' + response.statusCode);
-                        platform.log(error.message);
-                    }
-                });
-                ////////////////////////////////////////////
                 platform.setPowerState(accessory, value, callback);
             })
             .on('get', function(callback) {
