@@ -436,9 +436,9 @@ eWeLink.prototype.setPowerState = function(accessory, isOn, callback) {
     var urlNotification = '';
 
     if (isOn) {
-        urlNotification = platform.turnOnURL;
-    } else {
         urlNotification = platform.turnOffURL;
+    } else {
+        urlNotification = platform.turnOnURL;
     }
 
     requestURL({
