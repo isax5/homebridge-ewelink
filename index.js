@@ -431,29 +431,6 @@ eWeLink.prototype.setPowerState = function(accessory, isOn, callback) {
         targetState = 'on';
     }
 
-    ////////////////////////////////////////////
-    //          MY GAMES WITH URLS
-    var urlNotification = '';
-
-    if (isOn) {
-        urlNotification = platform.turnOffURL;
-    } else {
-        urlNotification = platform.turnOnURL;
-    }
-
-    requestURL({
-        url: urlNotification,
-        method: 'GET',
-    },
-    function (error, response, body) {
-        if (error) {
-            platform.log('STATUS: ' + response.statusCode);
-            platform.log(error.message);
-        }
-    });
-
-    ////////////////////////////////////////////
-
     platform.log("Setting power state to [%s] for device [%s]", targetState, accessory.displayName);
 
     var payload = {};
@@ -477,6 +454,27 @@ eWeLink.prototype.setPowerState = function(accessory, isOn, callback) {
         callback();
 
     } else {
+        ////////////////////////////////////////////
+        // MY GAMES WITH URLS ONLY WHEN IT'S NOT CONNECTED
+        var urlNotification = '';
+
+        if (isOn) {
+            urlNotification = platform.turnOffURL;
+        } else {
+            urlNotification = platform.turnOnURL;
+        }
+
+        requestURL({
+            url: urlNotification,
+            method: 'GET',
+        },
+        function (error, response, body) {
+            if (error) {
+                platform.log('STATUS: ' + response.statusCode);
+                platform.log(error.message);
+            }
+        });
+        ////////////////////////////////////////////
         callback('Socket was closed. It will reconnect automatically; please retry your command');
     }
 
